@@ -1,0 +1,8 @@
+assessment:
+  target: default
+  outputs:
+    default:
+      type: duckdb
+      path: 'database.duckdb'
+      extensions:
+        - tpch
