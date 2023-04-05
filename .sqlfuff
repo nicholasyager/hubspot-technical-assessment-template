@@ -1,0 +1,9 @@
+[sqlfluff]
+templater = jinja
+sql_file_exts = .sql
+dialesct = snowflake
+
+[sqlfluff:indentation]
+indented_joins = False
+indented_using_on = False
+
