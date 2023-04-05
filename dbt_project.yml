@@ -18,6 +18,5 @@ clean-targets:
 
 models:
   technical_assessment:
-    +schema: technical_assessment
     marts:
       materialized: table
