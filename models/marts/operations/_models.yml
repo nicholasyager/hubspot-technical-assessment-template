@@ -4,8 +4,6 @@ models:
 
   - name: client_purchase_status
 
-  - name: min_supply_cost
-
   - name: supplier_returns
 
   - name: lowcost_part_suppliers
