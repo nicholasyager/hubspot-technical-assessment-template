@@ -48,15 +48,15 @@ top10s AS (
 final AS (
     SELECT
         top10s.*,
-        suppliers.s_name,
-        suppliers.s_phone,
-        parts.p_name
+        suppliers.supplier_name,
+        suppliers.phone,
+        parts.part_name
     FROM
         top10s
     LEFT JOIN suppliers
-        ON top10s.supplier_id = suppliers.s_suppkey
+        ON top10s.supplier_id = suppliers.supplier_id
     LEFT JOIN parts
-        ON top10s.part_id = parts.p_partkey
+        ON top10s.part_id = parts.part_id
 )
 
 SELECT * FROM final

@@ -14,7 +14,7 @@ erDiagram
    PART ||--o{ PARTSUPP : references
    SUPPLIER  ||--o{ PARTSUPP : references
    SUPPLIER }o--|| NATION : in
-   LINEITEM }o--o{ PARTSUPP : references
+   LINEITEM }o--|{ PARTSUPP : references
    CUSTOMER }o--|| NATION : in
    NATION }o--|| REGION: in
    CUSTOMER ||--o{ ORDERS: places

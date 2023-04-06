@@ -14,15 +14,15 @@ losses as (
 
 customer_order_totals as (
     select
-        customers.c_custkey as customer_id,
-        customers.c_name as customer_name,
+        customers.customer_id,
+        customers.customer_name,
         round(sum(order_items.customer_cost), 2) as purchase_total
     from customers
     left join order_items
-        on customers.c_custkey = order_items.customer_id
+        on customers.customer_id = order_items.customer_id
     where order_items.item_status != 'R'
-    group by customers.c_custkey, customers.c_name
-    order by customers.c_custkey
+    group by customers.customer_id, customers.customer_name
+    order by customers.customer_id
 ),
 
 final as (
@@ -76,7 +76,7 @@ final as (
 
     from customer_order_totals
     left join losses
-        on customer_order_totals.customer_id = losses.c_custkey
+        on customer_order_totals.customer_id = losses.customer_id
 )
 
 select * from final
