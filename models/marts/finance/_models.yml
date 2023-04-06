@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+  - name: lost_revenue
+
+  - name: monthly_return_revenue
+
+

@@ -1,0 +1,11 @@
+version: 2
+
+models:
+
+  - name: client_purchase_status
+
+  - name: min_supply_cost
+
+  - name: supplier_returns
+
+
