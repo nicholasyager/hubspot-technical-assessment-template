@@ -13,10 +13,50 @@ models:
 
       - name: part_id
         description: The ID of the part being sold.
+        tests:
+          - not_null
+
+      - name: part_name
+        description: The name of the part being sold.
+
+      - name: size
+        description: Numerical category for the size of the part.
+
+      - name: part_manufacturer
+        description: The name of the manufacturer of the part.
+
+      - name: retail_price
+        description: The price in USD that the part retails for.
+
+      - name: supply_cost
+        description: The cost of the part when purchasing from the supplier.
 
       - name: supplier_id
         description: The ID of the supplier selling the part.
+        tests:
+          - not_null
 
       - name: supplier_name
         description: The name of the supplier selling the part.
 
+      - name: account_balance
+        description: The supplier's current balance on their account.
+
+      - name: nation_name
+        description: The name of the nation within which the supplier resides.
+
+      - name: region_name
+        description: >
+          The segmented region that the supplier is located in. This is based on
+          the supplier's nation.
+
+      - name: supplier_address
+        description: The current business address for the supplier.
+
+      - name: phone
+        description: The supplier's phone number
+
+      - name: supplier_comment
+        description: >
+          Comments regarding this supplier. May indicate current busiones
+          relationship.
