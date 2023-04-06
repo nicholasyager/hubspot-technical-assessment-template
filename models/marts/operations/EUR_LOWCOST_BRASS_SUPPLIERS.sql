@@ -1,30 +1,47 @@
-SELECT
-    p_name,
-    p_size,
-    p_retailprice,
-    s_acctbal,
-    s_name,
-    n_name,
-    p_partkey,
-    p_mfgr,
-    s_address,
-    s_phone,
-    s_comment
-FROM {{ source('TPCH_SF1', 'part') }},
-    {{ source('TPCH_SF1', 'supplier') }},
-    {{ source('TPCH_SF1', 'partsupp') }},
-    {{ source('TPCH_SF1', 'nation') }},
-    {{ source('TPCH_SF1', 'region') }}
-WHERE
-    p_partkey = ps_partkey AND s_suppkey = ps_suppkey
-    AND p_size = 15
-    AND p_type in ('LARGE BRUSHED BRASS', 'SMALL PLATED BRASS', 'PROMO ANODIZED BRASS')
-    AND s_nationkey = n_nationkey AND n_regionkey = r_regionkey
-    AND r_name = 'EUROPE'
-    AND ps_supplycost
-    = (
-        SELECT min(min_supply_cost.min_supply_cost)
-        FROM {{ ref('min_supply_cost') }}
-        WHERE partkey = p_partkey
-    )
-ORDER BY s_acctbal DESC, n_name ASC, s_name ASC, p_partkey ASC
+with
+
+lowcost_suppliers as (
+    select * from {{ ref('lowcost_part_suppliers') }}
+),
+
+all_suppliers as (
+    select * from {{ ref('suppliers') }}
+),
+
+parts as (
+    select * from {{ ref('stg_tpch__parts') }}
+),
+
+
+final as (
+
+    select
+        lowcost_suppliers.part_name,
+        lowcost_suppliers.size,
+        lowcost_suppliers.retail_price,
+        lowcost_suppliers.account_balance,
+        lowcost_suppliers.supplier_name,
+        lowcost_suppliers.nation_name,
+        lowcost_suppliers.part_id,
+        lowcost_suppliers.part_manufacturer,
+        lowcost_suppliers.supplier_address,
+        lowcost_suppliers.phone,
+        lowcost_suppliers.supplier_comment
+    from lowcost_suppliers
+    left join parts
+        on lowcost_suppliers.part_id = parts.part_id
+    left join all_suppliers
+        on lowcost_suppliers.supplier_id = all_suppliers.supplier_id
+    where
+        lowcost_suppliers.size = 15
+        and parts.part_type in (
+            'LARGE BRUSHED BRASS',
+            'SMALL PLATED BRASS',
+            'PROMO ANODIZED BRASS'
+        )
+        and lowcost_suppliers.region_name = 'EUROPE'
+
+)
+
+select * from final
+order by account_balance desc, nation_name asc, supplier_name asc, part_id asc
