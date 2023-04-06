@@ -10,38 +10,25 @@ parts as (
     from {{ ref('stg_tpch__parts') }}
 ),
 
-suppliers as (
+dim_suppliers as (
     select
         supplier_id,
         supplier_name,
         supplier_address,
         phone,
         account_balance,
-        nation_id,
+        nation_name,
+        region_name,
         supplier_comment
-    from {{ ref('stg_tpch__suppliers') }}
+    from {{ ref('suppliers') }}
 ),
 
 part_suppliers as (
     select
         part_id,
-        supplier_id
+        supplier_id,
+        supply_cost
     from {{ ref('stg_tpch__part_suppliers') }}
-),
-
-nations as (
-    select
-        nation_id,
-        nation_name,
-        region_id
-    from {{ ref('stg_tpch__nations') }}
-),
-
-regions as (
-    select
-        region_id,
-        region_name
-    from {{ ref('stg_tpch__regions') }}
 ),
 
 final as (
@@ -51,18 +38,27 @@ final as (
         parts.size,
         parts.part_manufacturer,
         parts.retail_price,
-        suppliers.account_balance,
-        suppliers.supplier_name,
-        nations.nation_name,
-        regions.region_name,
-        suppliers.supplier_address,
-        suppliers.phone,
-        suppliers.supplier_comment
+        part_suppliers.supply_cost,
+        dim_suppliers.supplier_id,
+        dim_suppliers.account_balance,
+        dim_suppliers.supplier_name,
+        dim_suppliers.nation_name,
+        dim_suppliers.region_name,
+        dim_suppliers.supplier_address,
+        dim_suppliers.phone,
+        dim_suppliers.supplier_comment
     from parts
-    left join part_suppliers on parts.part_id = part_suppliers.part_id
-    left join suppliers on part_suppliers.supplier_id = suppliers.supplier_id
-    left join nations on suppliers.nation_id = nations.nation_id
-    left join regions on nations.region_id = regions.region_id
+    left join part_suppliers
+        on parts.part_id = part_suppliers.part_id
+    left join dim_suppliers
+        on part_suppliers.supplier_id = dim_suppliers.supplier_id
+    qualify
+        row_number() over (
+            partition by
+                parts.part_id,
+                dim_suppliers.nation_name
+            order by part_suppliers.supply_cost desc
+        ) = 1
 )
 
 select * from final

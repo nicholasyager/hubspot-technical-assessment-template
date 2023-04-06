@@ -8,4 +8,17 @@ models:
 
   - name: supplier_returns
 
+  - name: lowcost_part_suppliers
+    description: Part suppliers with the lowest supply prices for each part by nation.
+
+    columns:
+
+      - name: part_id
+        description: The ID of the part being sold.
+
+      - name: supplier_id
+        description: The ID of the supplier selling the part.
+
+      - name: supplier_name
+        description: The name of the supplier selling the part.
 
