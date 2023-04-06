@@ -1,7 +1,7 @@
 WITH
 
-suppliers AS (
-    SELECT * FROM {{ ref('stg_tpch__suppliers') }}
+suppliers_mart AS (
+    SELECT * FROM {{ ref('suppliers') }}
 ),
 
 parts AS (
@@ -48,13 +48,13 @@ top10s AS (
 final AS (
     SELECT
         top10s.*,
-        suppliers.supplier_name,
-        suppliers.phone,
+        suppliers_mart.supplier_name,
+        suppliers_mart.phone,
         parts.part_name
     FROM
         top10s
-    LEFT JOIN suppliers
-        ON top10s.supplier_id = suppliers.supplier_id
+    LEFT JOIN suppliers_mart
+        ON top10s.supplier_id = suppliers_mart.supplier_id
     LEFT JOIN parts
         ON top10s.part_id = parts.part_id
 )
