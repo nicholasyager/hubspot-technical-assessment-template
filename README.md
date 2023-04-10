@@ -43,6 +43,10 @@ flowchart LR
     tpch.region --> stg_tpch__regions;
     tpch.supplier --> stg_tpch__suppliers;
 
+    stg_tpch__suppliers --> suppliers
+    stg_tpch__nations --> suppliers
+    stg_tpch__regions --> suppliers
+
     stg_tpch__orders --> lost_revenue
     stg_tpch__customers --> lost_revenue
     stg_tpch__nations --> lost_revenue
@@ -78,6 +82,11 @@ flowchart LR
     stg_tpch__suppliers --> supplier_returns
     stg_tpch__parts --> supplier_returns
     int_order_line_items__mapped --> supplier_returns
+
+    lowcost_part_suppliers
+    stg_tpch_parts --> lowcost_part_suppliers
+
+
 
 ```
 
