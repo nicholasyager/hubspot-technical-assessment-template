@@ -29,47 +29,55 @@ This is the current state of the dbt project's DAG. Generally. the project follo
 structures that require maintainence.
 
 ```mermaid
-graph LR;
-   tpch.customer --> stg_tpch__customers;
-   tpch.lineitem --> stg_tpch__line_items;
-   tpch.nation --> stg_tpch__nations;
-   tpch.order --> stg_tpch__orders;
-   tpch.partsupp --> stg_tpch__part_suppliers;
-   tpch.part --> stg_tpch__parts;
-   tpch.region --> stg_tpch__regions;
-   tpch.supplier --> stg_tpch__suppliers;
+flowchart LR
 
-   stg_tpch__orders --> lost_revenue
-   stg_tpch__customers --> lost_revenue
-   stg_tpch__nations --> lost_revenue
+    classDef newModel stroke:#DAF7A6, fill:#DAF7A644
+    classDef removedModel stroke:#F7A6B1, fill:#F7A6B144
 
-   stg_tpch__orders --> int_order_line_items__mapped
-   stg_tpch__line_items --> int_order_line_items__mapped
+    tpch.customer --> stg_tpch__customers;
+    tpch.lineitem --> stg_tpch__line_items;
+    tpch.nation --> stg_tpch__nations;
+    tpch.order --> stg_tpch__orders;
+    tpch.partsupp --> stg_tpch__part_suppliers;
+    tpch.part --> stg_tpch__parts;
+    tpch.region --> stg_tpch__regions;
+    tpch.supplier --> stg_tpch__suppliers;
 
+    stg_tpch__orders --> lost_revenue
+    stg_tpch__customers --> lost_revenue
+    stg_tpch__nations --> lost_revenue
 
-   int_order_line_items__mapped --> monthly_return_revenue
-
-
-   stg_tpch__customers --> client_purchas_status;
-   int_order_line_items__mapped --> client_purchas_status;
-   lost_revenue --> client_purchas_status;
-
-   tpch.part --> min_supply_cost
-   tpch.supplier --> min_supply_cost
-   tpch.parsupp --> min_supply_cost
-   tpch.nation --> min_supply_cost
-
-   tpch.part --> eur_lowcost_brass_suppliers
-   tpch.supplier --> eur_lowcost_brass_suppliers
-   tpch.parsupp --> eur_lowcost_brass_suppliers
-   tpch.nation --> eur_lowcost_brass_suppliers
-   tpch.region --> eur_lowcost_brass_suppliers
-   min_supply_cost --> eur_lowcost_brass_suppliers
+    stg_tpch__orders --> int_order_line_items__mapped
+    stg_tpch__line_items --> int_order_line_items__mapped
 
 
-   stg_tpch__suppliers --> supplier_returns
-   stg_tpch__parts --> supplier_returns
-   int_order_line_items__mapped --> supplier_returns
+    int_order_line_items__mapped --> monthly_return_revenue
+
+    stg_tpch__customers --> client_purchase_status;
+    int_order_line_items__mapped --> client_purchase_status;
+    lost_revenue --> client_purchase_status;
+
+    min_supply_cost
+    tpch.part --> min_supply_cost
+    tpch.supplier --> min_supply_cost
+    tpch.partsupp --> min_supply_cost
+    tpch.nation --> min_supply_cost
+
+    eur_lowcost_brass_suppliers
+    tpch.part --> eur_lowcost_brass_suppliers
+    tpch.supplier --> eur_lowcost_brass_suppliers
+    tpch.partsupp --> eur_lowcost_brass_suppliers
+    tpch.nation --> eur_lowcost_brass_suppliers
+    tpch.region --> eur_lowcost_brass_suppliers
+    min_supply_cost --> eur_lowcost_brass_suppliers
+
+    uk_lowcost_brass_suppliers
+    eur_lowcost_brass_suppliers --> uk_lowcost_brass_suppliers
+    tpch.supplier --> uk_lowcost_brass_suppliers
+
+    stg_tpch__suppliers --> supplier_returns
+    stg_tpch__parts --> supplier_returns
+    int_order_line_items__mapped --> supplier_returns
 
 ```
 
