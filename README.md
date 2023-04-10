@@ -83,11 +83,6 @@ flowchart LR
     stg_tpch__parts --> supplier_returns
     int_order_line_items__mapped --> supplier_returns
 
-    lowcost_part_suppliers
-    stg_tpch_parts --> lowcost_part_suppliers
-
-
-
 ```
 
 # Development
