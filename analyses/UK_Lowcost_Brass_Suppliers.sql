@@ -34,7 +34,11 @@ eur_lowcost_brass_suppliers as (
         on lowcost_suppliers.supplier_id = all_suppliers.supplier_id
     where
         lowcost_suppliers.size = 15
-        and parts.part_type like '%BRASS'
+        and parts.part_type in (
+            'LARGE BRUSHED BRASS',
+            'SMALL PLATED BRASS',
+            'PROMO ANODIZED BRASS'
+        )
         and lowcost_suppliers.region_name = 'EUROPE'
 
 )
