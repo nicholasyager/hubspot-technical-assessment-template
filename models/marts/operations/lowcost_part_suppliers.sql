@@ -33,31 +33,31 @@ part_suppliers as (
 
 final as (
     select
-        parts.part_id,
-        parts.part_name,
-        parts.size,
-        parts.part_manufacturer,
-        parts.retail_price,
-        part_suppliers.supply_cost,
-        dim_suppliers.supplier_id,
-        dim_suppliers.account_balance,
-        dim_suppliers.supplier_name,
-        dim_suppliers.nation_name,
-        dim_suppliers.region_name,
-        dim_suppliers.supplier_address,
-        dim_suppliers.phone,
-        dim_suppliers.supplier_comment
-    from parts
-    left join part_suppliers
-        on parts.part_id = part_suppliers.part_id
-    left join dim_suppliers
-        on part_suppliers.supplier_id = dim_suppliers.supplier_id
+        p.part_id,
+        p.part_name,
+        p.size,
+        p.part_manufacturer,
+        p.retail_price,
+        ps.supply_cost,
+        s.supplier_id,
+        s.account_balance,
+        s.supplier_name,
+        s.nation_name,
+        s.region_name,
+        s.supplier_address,
+        s.phone,
+        s.supplier_comment
+    from parts as p
+    left join part_suppliers as ps
+        on p.part_id = ps.part_id
+    left join dim_suppliers as s
+        on ps.supplier_id = s.supplier_id
     qualify
         row_number() over (
             partition by
-                parts.part_id,
-                dim_suppliers.nation_name
-            order by part_suppliers.supply_cost desc
+                p.part_id,
+                s.nation_name
+            order by ps.supply_cost desc
         ) = 1
 )
 
