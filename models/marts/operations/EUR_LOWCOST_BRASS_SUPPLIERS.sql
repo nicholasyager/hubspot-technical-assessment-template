@@ -17,7 +17,8 @@ FROM {{ source('TPCH_SF1', 'part') }},
     {{ source('TPCH_SF1', 'region') }}
 WHERE
     p_partkey = ps_partkey AND s_suppkey = ps_suppkey
-    AND p_size = 15 AND p_type LIKE '%BRASS'
+    AND p_size = 15
+    AND p_type in ('LARGE BRUSHED BRASS', 'SMALL PLATED BRASS', 'PROMO ANODIZED BRASS')
     AND s_nationkey = n_nationkey AND n_regionkey = r_regionkey
     AND r_name = 'EUROPE'
     AND ps_supplycost
