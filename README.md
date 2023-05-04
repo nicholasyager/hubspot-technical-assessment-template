@@ -9,7 +9,7 @@ communicates feedback.
 
 ## Grading
 
-A rubric for this assessment can be found in the [RUBRIC.md](RUBRIC.md) file.
+A rubric for this assessment can be found [here](https://docs.google.com/document/d/18aKKIwwnay_NQ-4Cu-ewxi4YoXYf9VN1QFyul5qA0kQ/edit).
 
 ## TPC-H Source Data Structures
 
