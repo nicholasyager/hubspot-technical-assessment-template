@@ -7,10 +7,6 @@ leverages TPC-H data to create a platform for exploring how a candidate thinks
 about data transformation, analyzes and weights technical approaches, and
 communicates feedback.
 
-## Grading
-
-A rubric for this assessment can be found [here](https://docs.google.com/document/d/18aKKIwwnay_NQ-4Cu-ewxi4YoXYf9VN1QFyul5qA0kQ/edit).
-
 ## TPC-H Source Data Structures
 
 ```mermaid
